@@ -1,0 +1,1 @@
+using gnseo_STUDENTH21Srv as service from '../../srv/service';

@@ -1,5 +1,5 @@
 {
-  "version": "1.38.0",
+  "version": "2.0.0",
   "tasks": [
     {
       "label": "kill-cds-processes",
@@ -40,21 +40,6 @@
       }
     },
     {
-      "label": "PreLaunchTask for Run gnseo_STUDENTH21",
-      "type": "process",
-      "command": "npx",
-      "args": [
-        "dev-cap-tools",
-        "gen-entrypoint"
-      ],
-      "dependsOn": [
-        "BuildMDK"
-      ],
-      "options": {
-        "cwd": "${workspaceFolder}"
-      }
-    },
-    {
       "type": "dpt.ptdeploy",
       "label": "Deploy gnseo_STUDENTH21",
       "taskType": "Deploy"
@@ -64,6 +49,30 @@
       "label": "Enable Discovery and Deploy gnseo_STUDENTH21",
       "taskType": "Deploy",
       "enableDiscovery": "true"
+    },
+    {
+      "label": "DeployToHANADB:.env1",
+      "type": "shell",
+      "command": "eval $(cat ${workspaceFolder}/env/.env1) cds deploy --to hana --auto-undeploy",
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
+    },
+    {
+      "label": "PreLaunchTask for Run gnseo_STUDENTH21",
+      "type": "process",
+      "command": "npx",
+      "args": [
+        "dev-cap-tools",
+        "gen-entrypoint"
+      ],
+      "dependsOn": [
+        "BuildMDK",
+        "DeployToHANADB:.env1"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      }
     }
   ]
 }
